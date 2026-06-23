@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menyama Braya - Aplikasi Wisata Budaya Berbasis Komunitas</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts (Playfair Display & Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fcf9f4;
+        }
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Hide scrollbars but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-stone-100 p-0 md:p-4">
+
+    <!-- Mobile Device Frame Container -->
+    <div class="relative w-full max-w-md h-[844px] bg-[#FAF6F0] shadow-2xl rounded-[40px] border-8 border-stone-800 overflow-hidden flex flex-col">
+        
+        <!-- Status Bar Simulator -->
+        <div class="bg-amber-950 text-amber-100 px-6 pt-3 pb-2 flex justify-between items-center text-xs font-semibold z-30">
+            <span>19:45 WITA</span>
+            <div class="w-20 h-4 bg-black rounded-full mx-auto absolute left-1/2 transform -translate-x-1/2 top-1.5 hidden md:block"></div>
+            <div class="flex items-center gap-1">
+                <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+                <i data-lucide="battery" class="w-4 h-4"></i>
+            </div>
+        </div>
+
+        <!-- Main Content Area with Dynamic Pages -->
+        <div id="app-content" class="flex-1 overflow-y-auto no-scrollbar pb-24 relative">
+            
+            <!-- PAGE 1: SPLASH & ONBOARDING (Default Hidden/Show based on state) -->
+            <div id="page-splash" class="hidden min-h-full flex flex-col justify-between p-6 bg-gradient-to-b from-amber-900 to-amber-950 text-white text-center">
+                <div class="my-auto space-y-6">
+                    <div class="w-24 h-24 bg-amber-500/20 border-2 border-amber-400 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                        <i data-lucide="heart" class="w-12 h-12 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <h1 class="serif-font text-4xl font-bold tracking-wide">Menyama Braya</h1>
+                    <p class="text-amber-200 text-sm max-w-xs mx-auto leading-relaxed">
+                        Mengubah wisatawan menjadi bagian dari keluarga besar Bali melalui nilai kebersamaan dan persaudaraan sejati.
+                    </p>
+                </div>
+                <button onclick="navigateTo('home')" class="w-full bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold py-4 rounded-2xl transition duration-300 shadow-md">
+                    Mulai Perjalanan Budaya
+                </button>
+            </div>
+
+            <!-- PAGE 2: HOME & EXPLORE -->
+            <div id="page-home" class="p-5 space-y-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-stone-500 font-medium">Selamat Datang, Braya!</p>
+                        <h2 class="text-xl font-bold text-stone-800 flex items-center gap-1">
+                            I Made Michael <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full border border-amber-200">Turis</span>
+                        </h2>
+                    </div>
+                    <button onclick="navigateTo('profile')" class="w-10 h-10 rounded-full border-2 border-amber-600 overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=120" alt="Michael Profile" class="w-full h-full object-cover">
+                    </button>
+                </div>
+
+                <!-- Banner Promosi Budaya -->
+                <div class="relative bg-amber-900 rounded-3xl p-5 text-white overflow-hidden shadow-md">
+                    <div class="relative z-10 space-y-2 max-w-[70%]">
+                        <span class="text-[10px] bg-amber-500/30 text-amber-300 font-bold uppercase tracking-wider px-2 py-1 rounded-md">Filosofi Adat</span>
+                        <h3 class="serif-font text-lg font-bold leading-snug">"Tat Twam Asi"</h3>
+                        <p class="text-[11px] text-amber-100/90 leading-relaxed">Ia adalah kamu, kamu adalah ia. Di Bali, kita semua adalah bersaudara (Braya).</p>
+                    </div>
+                    <div class="absolute right-[-10px] bottom-[-20px] opacity-25 text-amber-400">
+                        <i data-lucide="flower" class="w-32 h-32"></i>
+                    </div>
+                </div>
+
+                <!-- Dua Jasa Layanan Utama -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i> Pilih Pengalaman Budaya
+                    </h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Card 1: Cultural Experience -->
+                        <div onclick="filterExperiences('cultural')" class="cursor-pointer bg-white border border-stone-200 p-4 rounded-2xl hover:border-amber-500 hover:shadow-sm transition-all text-left">
+                            <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mb-3">
+                                <i data-lucide="palette" class="w-5 h-5"></i>
+                            </div>
+                            <h5 class="font-bold text-xs text-stone-800">Cultural Experience</h5>
+                            <p class="text-[10px] text-stone-500 mt-1">Belajar menari, mejejaitan, kuliner, & nyurat lontar bersama warga lokal.</p>
+                        </div>
+                        <!-- Card 2: Community Experience -->
+                        <div onclick="filterExperiences('community')" class="cursor-pointer bg-white border border-stone-200 p-4 rounded-2xl hover:border-amber-500 hover:shadow-sm transition-all text-left">
+                            <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mb-3">
+                                <i data-lucide="users" class="w-5 h-5"></i>
+                            </div>
+                            <h5 class="font-bold text-xs text-stone-800">Community Experience</h5>
+                            <p class="text-[10px] text-stone-500 mt-1">Gotong royong bale banjar, mebat, & kegiatan pura non-sakral.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pilihan Aktivitas Terdekat -->
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-sm font-bold text-stone-800 uppercase tracking-wider">Aktivitas Terpopuler</h4>
+                        <span id="active-filter-badge" class="text-[10px] bg-stone-200 text-stone-700 px-2 py-0.5 rounded-full font-semibold">Semua</span>
+                    </div>
+
+                    <!-- List Container -->
+                    <div id="experience-list" class="space-y-3">
+                        <!-- Dynamic content injected here by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 3: EXPERIENCE DETAIL -->
+            <div id="page-detail" class="hidden">
+                <!-- Banner Image -->
+                <div class="relative h-64 bg-stone-300">
+                    <img id="detail-img" src="" alt="Detail" class="w-full h-full object-cover">
+                    <button onclick="navigateTo('home')" class="absolute top-4 left-4 bg-white/90 p-2.5 rounded-full shadow-lg text-stone-800 hover:bg-white">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </button>
+                    <span id="detail-type-badge" class="absolute bottom-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-md text-white"></span>
+                </div>
+
+                <div class="p-5 space-y-5">
+                    <!-- Title & Host -->
+                    <div class="space-y-2">
+                        <h2 id="detail-title" class="serif-font text-2xl font-bold text-stone-800"></h2>
+                        <div class="flex items-center gap-3 p-3 bg-stone-50 border border-stone-200 rounded-2xl">
+                            <img id="detail-host-img" src="" alt="Host" class="w-10 h-10 rounded-full object-cover">
+                            <div class="flex-1">
+                                <p class="text-xs text-stone-500">Mentor Lokal (Braya)</p>
+                                <p id="detail-host-name" class="text-sm font-bold text-stone-800"></p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-bold text-amber-600 block">Sisa Slot</span>
+                                <span id="detail-capacity" class="text-[11px] bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full border border-amber-200"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Aturan Adat Ringkas (Awig-Krama) -->
+                    <div class="bg-amber-50/50 border border-amber-200 rounded-2xl p-4 space-y-2">
+                        <h4 class="text-xs font-bold text-amber-900 flex items-center gap-1.5 uppercase tracking-wider">
+                            <i data-lucide="shield-alert" class="w-4 h-4 text-amber-700"></i> Awig-Krama (Aturan Adat)
+                        </h4>
+                        <p id="detail-awig" class="text-xs text-stone-600 leading-relaxed"></p>
+                    </div>
+
+                    <!-- Deskripsi & Benefit -->
+                    <div class="space-y-2 text-left">
+                        <h4 class="text-xs font-bold text-stone-800 uppercase tracking-wider">Tentang Aktivitas</h4>
+                        <p id="detail-desc" class="text-xs text-stone-600 leading-relaxed"></p>
+                    </div>
+
+                    <!-- Keunikan 1: Mutual Exchange (Wisatawan Mengajar) -->
+                    <div class="border-2 border-dashed border-amber-300 bg-amber-50/30 rounded-2xl p-4 text-left space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-bold text-amber-950">1</span>
+                            <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider">Sesi Timbal Balik (Mutual Exchange)</h4>
+                        </div>
+                        <p class="text-[11px] text-stone-600 leading-relaxed">
+                            Sebagai bagian dari ikatan keluarga baru, setelah kegiatan selesai Anda dipersilakan (opsional) mengajar/berbagi keterampilan kepada komunitas lokal selama 1 jam (misal: Bahasa Inggris dasar atau kisah budaya Anda).
+                        </p>
+                        <label class="flex items-center gap-2 mt-2 bg-white px-3 py-2 rounded-xl border border-stone-200 cursor-pointer">
+                            <input type="checkbox" id="exchange-opt-in" class="rounded text-amber-600 focus:ring-amber-500 h-4 w-4">
+                            <span class="text-xs font-medium text-stone-700">Ya, saya bersedia berbagi ilmu selama 1 jam</span>
+                        </label>
+                    </div>
+
+                    <!-- Total Biaya & Booking -->
+                    <div class="pt-4 border-t border-stone-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase tracking-wider">Kontribusi / Donasi</p>
+                            <p id="detail-price" class="text-lg font-bold text-stone-800"></p>
+                        </div>
+                        <button onclick="openPaymentModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-6 py-3 rounded-2xl shadow-md transition-all text-sm">
+                            Pesan Aktivitas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 4: BRAYA FEED (Social Media) -->
+            <div id="page-feed" class="hidden p-5 space-y-5">
+                <!-- Header -->
+                <div>
+                    <h2 class="serif-font text-2xl font-bold text-stone-800">Braya Feed</h2>
+                    <p class="text-xs text-stone-500">Bagikan & lihat kehangatan interaksi braya di seluruh Bali.</p>
+                </div>
+
+                <!-- Input Post Baru -->
+                <div class="bg-white border border-stone-200 rounded-2xl p-4 space-y-3">
+                    <div class="flex items-start gap-3">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=120" alt="Avatar" class="w-8 h-8 rounded-full object-cover">
+                        <textarea id="new-post-text" placeholder="Bagikan momen kebersamaan Anda bersama braya..." class="flex-1 text-xs bg-stone-50 border border-stone-200 rounded-xl p-2.5 focus:outline-none focus:ring-1 focus:ring-amber-500 resize-none h-16"></textarea>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-stone-100">
+                        <button onclick="triggerPhotoUpload()" class="text-amber-700 text-xs flex items-center gap-1 hover:text-amber-800">
+                            <i data-lucide="image" class="w-4 h-4"></i> Tambah Foto
+                        </button>
+                        <button onclick="addNewPost()" class="bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm">
+                            Kirim Post
+                        </button>
+                    </div>
+                    <div id="upload-status" class="hidden text-[10px] text-emerald-600 font-semibold">✓ Foto siap diunggah!</div>
+                </div>
+
+                <!-- Feed Posts Container -->
+                <div id="feed-posts" class="space-y-4">
+                    <!-- Posts will be generated dynamically by JS -->
+                </div>
+            </div>
+
+            <!-- PAGE 5: REUNION (6-Monthly Zoom Meeting) -->
+            <div id="page-reunion" class="hidden p-5 space-y-5">
+                <div>
+                    <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Silaturahmi Online</span>
+                    <h2 class="serif-font text-2xl font-bold text-stone-800 mt-2">Braya Reunion</h2>
+                    <p class="text-xs text-stone-500">Meskipun aktivitas telah usai, kekeluargaan tetap terjaga. Reuni online diselenggarakan setiap 6 bulan sekali.</p>
+                </div>
+
+                <!-- Upcoming Reunion Card -->
+                <div class="bg-gradient-to-br from-amber-800 to-amber-950 text-white rounded-3xl p-5 space-y-4 relative overflow-hidden shadow-lg">
+                    <div class="relative z-10 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] text-amber-300 uppercase tracking-widest font-bold">Jadwal Reuni Terdekat</p>
+                                <h3 class="text-lg font-bold">Reuni Raya Sementaraan</h3>
+                            </div>
+                            <span class="text-[10px] bg-amber-500/30 text-amber-200 border border-amber-400 px-2 py-0.5 rounded-full">Zoom Online</span>
+                        </div>
+                        
+                        <div class="flex gap-4 text-xs">
+                            <div class="flex items-center gap-1.5 text-amber-200">
+                                <i data-lucide="calendar" class="w-4 h-4"></i>
+                                <span>25 Juli 2026</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-amber-200">
+                                <i data-lucide="clock" class="w-4 h-4"></i>
+                                <span>16:00 - 17:30 WITA</span>
+                            </div>
+                        </div>
+
+                        <!-- Host Mentors yang hadir -->
+                        <div class="space-y-1">
+                            <p class="text-[10px] text-amber-300">Akan dihadiri oleh mentor Anda:</p>
+                            <div class="flex -space-x-2 overflow-hidden py-1">
+                                <img class="inline-block h-6 w-6 rounded-full ring-2 ring-amber-950 object-cover" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100" alt="Ni Wayan">
+                                <img class="inline-block h-6 w-6 rounded-full ring-2 ring-amber-950 object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" alt="I Ketut">
+                            </div>
+                        </div>
+
+                        <button onclick="showToast('Link Zoom akan dikirimkan ke Email & WhatsApp Anda 1 hari sebelum acara.')" class="w-full bg-white hover:bg-stone-100 text-amber-950 font-bold py-2.5 rounded-xl transition text-xs shadow-sm">
+                            Ingatkan Saya via WhatsApp
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Testimoni Kehangatan -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-bold text-stone-800 uppercase tracking-wider">Kesan Kekeluargaan Braya</h4>
+                    <div class="bg-white border border-stone-200 rounded-2xl p-4 text-left space-y-2">
+                        <p class="text-xs text-stone-600 italic">"Melalui reuni Zoom bulan lalu, saya bisa menyapa kembali Ibu Wayan yang mengajari saya menari 6 bulan lalu di Ubud. Rasanya benar-benar seperti memiliki ibu angkat di Bali."</p>
+                        <p class="text-[10px] font-bold text-stone-800 text-right">- Sarah, Wisatawan asal Australia</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 6: AWIG-KRAMA (Aturan Adat) -->
+            <div id="page-awig" class="hidden p-5 space-y-5">
+                <div>
+                    <h2 class="serif-font text-2xl font-bold text-stone-800">Awig-Krama Bali</h2>
+                    <p class="text-xs text-stone-500">Hargai & lestarikan tradisi setempat dengan memahami etika berwisata di Bali.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <!-- Rule 1 -->
+                    <div class="bg-white border border-stone-200 p-4 rounded-2xl flex items-start gap-3">
+                        <div class="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center text-amber-800 font-bold text-xs shrink-0">1</div>
+                        <div>
+                            <h4 class="text-xs font-bold text-stone-800">Menjaga Kesucian Area Pura</h4>
+                            <p class="text-[11px] text-stone-600 mt-1 leading-relaxed">Hindari memasuki pura saat sedang datang bulan (menstruasi), terluka berdarah, atau sedang berkabung. Gunakan kain kamen adat Bali.</p>
+                        </div>
+                    </div>
+                    <!-- Rule 2 -->
+                    <div class="bg-white border border-stone-200 p-4 rounded-2xl flex items-start gap-3">
+                        <div class="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center text-amber-800 font-bold text-xs shrink-0">2</div>
+                        <div>
+                            <h4 class="text-xs font-bold text-stone-800">Menghormati Sesajen (Canang Sari)</h4>
+                            <p class="text-[11px] text-stone-600 mt-1 leading-relaxed">Jangan melangkahi atau menginjak canang sari yang diletakkan di jalan/pintu masuk. Jika tidak sengaja, sampaikan permohonan maaf dalam hati.</p>
+                        </div>
+                    </div>
+                    <!-- Rule 3 -->
+                    <div class="bg-white border border-stone-200 p-4 rounded-2xl flex items-start gap-3">
+                        <div class="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center text-amber-800 font-bold text-xs shrink-0">3</div>
+                        <div>
+                            <h4 class="text-xs font-bold text-stone-800">Kesopanan Berpakaian & Berbicara</h4>
+                            <p class="text-[11px] text-stone-600 mt-1 leading-relaxed">Kenakan pakaian sopan saat berada di sekitar pemukiman warga lokal atau tempat suci. Jaga tutur kata yang ramah.</p>
+                        </div>
+                    </div>
+                    <!-- Rule 4 -->
+                    <div class="bg-white border border-stone-200 p-4 rounded-2xl flex items-start gap-3">
+                        <div class="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center text-amber-800 font-bold text-xs shrink-0">4</div>
+                        <div>
+                            <h4 class="text-xs font-bold text-stone-800">Batasan Foto di Area Sakral</h4>
+                            <p class="text-[11px] text-stone-600 mt-1 leading-relaxed">Selalu meminta izin kepada pemandu atau warga setempat sebelum mendokumentasikan upacara adat atau bagian dalam pura.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl text-center">
+                    <p class="text-xs text-emerald-800 font-semibold">"Dengan memahami adat, Anda telah ikut melestarikan taksu Bali."</p>
+                </div>
+            </div>
+
+            <!-- PAGE 7: PROFILE & BRAYA FAMILY TREE -->
+            <div id="page-profile" class="hidden p-5 space-y-6">
+                <!-- Identity Card (Bali Identity) -->
+                <div class="relative bg-gradient-to-r from-amber-600 to-amber-800 text-white p-5 rounded-3xl shadow-lg space-y-4 overflow-hidden">
+                    <div class="absolute right-[-20px] top-[-20px] opacity-10">
+                        <i data-lucide="user" class="w-40 h-40"></i>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[9px] bg-amber-900/40 text-amber-200 px-2.5 py-1 rounded-md uppercase tracking-wider font-bold">KARTU KELUARGA BRAYA</span>
+                            <h3 class="text-xl font-bold mt-1.5">I Made Michael</h3>
+                            <p class="text-[10px] text-amber-200">Nama Asli: Michael Johnson (Australia)</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-bold text-amber-300">Level</span>
+                            <p class="text-sm font-black text-white">BRAYA UTAMA</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-white/20 flex justify-between text-center">
+                        <div>
+                            <p class="text-[9px] text-amber-200 uppercase">Tinggal Bersama</p>
+                            <p class="text-xs font-bold">I Wayan Sudarta</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-amber-200 uppercase">Sejak</p>
+                            <p class="text-xs font-bold">Juni 2026</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-amber-200 uppercase">Diskon Reward</p>
+                            <p class="text-xs font-bold text-yellow-300">15% Aktif</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keunikan 5: Braya Family Tree -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="git-branch" class="w-4 h-4 text-amber-600"></i> Braya Family Tree
+                    </h4>
+                    <p class="text-xs text-stone-500">Bagan silsilah hubungan hangat kekeluargaan yang telah Anda jalin bersama keluarga lokal di Bali.</p>
+                    
+                    <!-- Family Tree Diagram -->
+                    <div class="bg-white border border-stone-200 p-4 rounded-3xl space-y-4 shadow-sm text-center relative">
+                        <!-- Host Family (Root) -->
+                        <div class="inline-block bg-amber-50 border-2 border-amber-500 px-3 py-2 rounded-2xl">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=120" alt="I Wayan Sudarta" class="w-10 h-10 rounded-full mx-auto object-cover mb-1 border border-amber-300">
+                            <p class="text-xs font-bold text-stone-800">I Wayan Sudarta</p>
+                            <p class="text-[9px] text-amber-800 font-semibold">Kepala Keluarga Lokal</p>
+                        </div>
+
+                        <!-- Connector Lines (Visualized using Tailwind elements) -->
+                        <div class="flex flex-col items-center">
+                            <div class="w-0.5 h-6 bg-amber-500"></div>
+                            <div class="w-2/3 h-0.5 bg-amber-500"></div>
+                            <div class="flex justify-between w-2/3">
+                                <div class="w-0.5 h-4 bg-amber-500"></div>
+                                <div class="w-0.5 h-4 bg-amber-500"></div>
+                            </div>
+                        </div>
+
+                        <!-- Adopted Families / Guests -->
+                        <div class="flex justify-between gap-2 px-2">
+                            <!-- Tourist 1 (Active User) -->
+                            <div class="flex-1 bg-amber-500 text-amber-950 p-2 rounded-2xl shadow-sm border-2 border-amber-600">
+                                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=120" alt="Michael" class="w-8 h-8 rounded-full mx-auto object-cover mb-1 ring-2 ring-amber-300">
+                                <p class="text-[10px] font-bold">I Made Michael</p>
+                                <p class="text-[8px] opacity-80">Anda (Australia)</p>
+                            </div>
+                            <!-- Tourist 2 (Other Guest) -->
+                            <div class="flex-1 bg-amber-50/50 border border-stone-200 p-2 rounded-2xl opacity-75">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120" alt="Yuki" class="w-8 h-8 rounded-full mx-auto object-cover mb-1">
+                                <p class="text-[10px] font-bold text-stone-800">Ni Wayan Yuki</p>
+                                <p class="text-[8px] text-stone-500">Yuki Sato (Jepang)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keunikan 3: Digital Certificate Gallery -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="award" class="w-4 h-4 text-amber-600"></i> Sertifikat Braya & Reward
+                    </h4>
+                    <div id="certificate-list" class="space-y-2">
+                        <!-- Dynamic Certificate Cards -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- POPUP: PEMBAYARAN & DONASI (DANA PEMBERDAYAAN) -->
+        <div id="payment-modal" class="hidden absolute inset-0 bg-black/60 z-50 flex items-end justify-center">
+            <div class="bg-white w-full rounded-t-[32px] p-6 space-y-4 max-h-[90%] overflow-y-auto no-scrollbar">
+                <div class="flex justify-between items-center pb-2 border-b border-stone-100">
+                    <h3 class="serif-font text-xl font-bold text-stone-800">Konfirmasi Pemesanan</h3>
+                    <button onclick="closePaymentModal()" class="text-stone-400 hover:text-stone-600">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Rincian Program -->
+                <div class="bg-stone-50 p-4 rounded-2xl flex gap-3">
+                    <img id="checkout-img" src="" alt="Checkout Product" class="w-16 h-16 rounded-xl object-cover">
+                    <div class="flex-1">
+                        <h4 id="checkout-title" class="text-xs font-bold text-stone-800"></h4>
+                        <p id="checkout-host" class="text-[10px] text-stone-500 mt-0.5"></p>
+                        <p id="checkout-price-base" class="text-xs font-semibold text-amber-700 mt-1"></p>
+                    </div>
+                </div>
+
+                <!-- Keunikan 4: Dana Pemberdayaan Masyarakat (Donasi) -->
+                <div class="bg-amber-50/50 border border-amber-200 rounded-2xl p-4 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-xs font-bold text-amber-900 flex items-center gap-1.5 uppercase tracking-wider">
+                            <i data-lucide="gift" class="w-4 h-4 text-amber-700"></i> Dana Pemberdayaan Masyarakat
+                        </h4>
+                        <span class="text-[10px] bg-amber-500 text-amber-950 px-2 py-0.5 rounded-full font-bold">Donasi</span>
+                    </div>
+                    <p class="text-[11px] text-stone-600 leading-relaxed">
+                        Anda dapat secara sukarela menambahkan donasi atau membulatkan pembayaran untuk mendukung kelas bahasa Inggris & fasilitas pelestarian budaya warga lokal Bali.
+                    </p>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button onclick="selectDonation(10000)" class="donation-btn bg-white border border-stone-200 text-stone-700 text-xs py-2 rounded-xl hover:border-amber-500 font-semibold">+10K</button>
+                        <button onclick="selectDonation(25000)" class="donation-btn bg-white border border-stone-200 text-stone-700 text-xs py-2 rounded-xl hover:border-amber-500 font-semibold">+25K</button>
+                        <button onclick="selectDonation(50000)" class="donation-btn bg-white border border-stone-200 text-stone-700 text-xs py-2 rounded-xl hover:border-amber-500 font-semibold">+50K</button>
+                        <button onclick="selectDonation(0)" class="donation-btn bg-amber-100 border border-amber-400 text-amber-950 text-xs py-2 rounded-xl font-bold">Nol</button>
+                    </div>
+                </div>
+
+                <!-- Sistem Transparansi Pembagian Pembayaran -->
+                <div class="space-y-1.5">
+                    <h5 class="text-[10px] font-bold text-stone-800 uppercase tracking-wider">Transparansi Pembagian Dana (80-10-10)</h5>
+                    <div class="bg-stone-50 p-3 rounded-xl text-[11px] text-stone-600 space-y-1">
+                        <div class="flex justify-between">
+                            <span>80% untuk Warga Lokal Penyedia Jasa</span>
+                            <span id="split-host" class="font-bold text-stone-800"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>10% untuk Biaya Perawatan Aplikasi</span>
+                            <span id="split-app" class="font-bold text-stone-800"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>10% untuk Program Pemberdayaan Adat</span>
+                            <span id="split-program" class="font-bold text-stone-800"></span>
+                        </div>
+                        <div id="split-donation-row" class="flex justify-between text-emerald-700 font-semibold hidden">
+                            <span>Tambahan Donasi Pemberdayaan Anda</span>
+                            <span id="split-donation-val"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Akhir & Tombol Bayar -->
+                <div class="flex items-center justify-between pt-3 border-t border-stone-100">
+                    <div>
+                        <p class="text-[10px] text-stone-500 uppercase tracking-wider">Total Pembayaran</p>
+                        <p id="checkout-total" class="text-xl font-extrabold text-stone-800"></p>
+                    </div>
+                    <button onclick="processPayment()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-md transition-all text-sm">
+                        Bayar Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOAST / NOTIFIKASI INFORMASI -->
+        <div id="toast" class="absolute top-16 left-1/2 transform -translate-x-1/2 bg-amber-950 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none text-center min-w-[200px]">
+            Pesan Notifikasi
+        </div>
+
+        <!-- Custom Bottom Navigation Bar -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-stone-200/80 px-6 py-3 flex justify-between items-center z-40 shadow-xl">
+            <button onclick="navigateTo('home')" class="nav-btn flex flex-col items-center gap-1 text-amber-700 font-semibold" data-target="home">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span class="text-[10px]">Eksplor</span>
+            </button>
+            <button onclick="navigateTo('feed')" class="nav-btn flex flex-col items-center gap-1 text-stone-400" data-target="feed">
+                <i data-lucide="message-square" class="w-5 h-5"></i>
+                <span class="text-[10px]">Feed</span>
+            </button>
+            <button onclick="navigateTo('reunion')" class="nav-btn flex flex-col items-center gap-1 text-stone-400" data-target="reunion">
+                <i data-lucide="video" class="w-5 h-5"></i>
+                <span class="text-[10px]">Reuni</span>
+            </button>
+            <button onclick="navigateTo('awig')" class="nav-btn flex flex-col items-center gap-1 text-stone-400" data-target="awig">
+                <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                <span class="text-[10px]">Awig</span>
+            </button>
+            <button onclick="navigateTo('profile')" class="nav-btn flex flex-col items-center gap-1 text-stone-400" data-target="profile">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                <span class="text-[10px]">Profil</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript & Business Logic -->
+    <script>
+        // Database Aktivitas (Mockup Data)
+        const experiences = [
+            {
+                id: 1,
+                category: "cultural",
+                title: "Belajar Membuat Canang Sari & Sembahyang",
+                host: "I Wayan Sudarta",
+                hostImg: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=120",
+                img: "https://images.unsplash.com/photo-1546484475-7f7bd55792da?auto=format&fit=crop&q=80&w=600",
+                desc: "Pelajari seni merangkai janur kelapa dan bunga warna-warni yang menjadi persembahan harian warga Hindu Bali. Di akhir sesi, Anda akan dibimbing untuk sembahyang di merajan keluarga dengan pakaian adat lengkap.",
+                price: 150000,
+                capacity: "3 orang/hari",
+                awig: "Peserta diharapkan memakai kain kamen tradisional (disediakan) dan bagi wanita tidak sedang dalam masa menstruasi saat memasuki area suci merajan keluarga."
+            },
+            {
+                id: 2,
+                category: "cultural",
+                title: "Kelas Tari Bali Legong & Rias Klasik",
+                host: "Ni Nyoman Lasmi",
+                hostImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120",
+                img: "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=600",
+                desc: "Masuki dunia magis ekspresi gerak mata, jemari, dan tubuh khas tari Bali klasik. Dilengkapi dengan sesi pemakaian riasan klasik dan mahkota gelungan yang agung bersama seniman lokal.",
+                price: 250000,
+                capacity: "2 orang/hari",
+                awig: "Jaga kebersihan pakaian tari dan bersikaplah sopan saat mengenakan mahkota gelungan tari yang disucikan oleh pemiliknya."
+            },
+            {
+                id: 3,
+                category: "community",
+                title: "Gotong Royong & Nyayur di Bale Banjar",
+                host: "I Ketut Ariawan (Kelihan Banjar)",
+                hostImg: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120",
+                img: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=600",
+                desc: "Bergabung bersama krama banjar dalam gotong royong merawat fasilitas bale banjar serta memasak masakan sayur paku bersama ibu-ibu PKK. Pengalaman interaksi organik paling jujur dan mendalam.",
+                price: 75000,
+                capacity: "5 orang (Hanya Sabtu)",
+                awig: "Gunakan kaos santai namun sopan. Ikuti arahan krama banjar saat memegang perlengkapan gotong royong."
+            },
+            {
+                id: 4,
+                category: "community",
+                title: "Mebat Adat & Membuat Sate Lilit Bali",
+                host: "I Made Suartha",
+                hostImg: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=120",
+                img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=600",
+                desc: "Sesi memasak bersama para pria lokal (mebat) dalam meramu bumbu basa gede Bali dan mengolah sate lilit daging kelapa panggang bara arang batok kelapa.",
+                price: 180000,
+                capacity: "4 orang (Hanya hari upacara)",
+                awig: "Tidak bercanda berlebihan saat memegang pisau rajang tradisional (tiuk blakas) dan menjaga kebersihan komunal."
+            }
+        ];
+
+        // Database Feed Sosial Media (Mockup)
+        let feeds = [
+            {
+                id: 1,
+                author: "Sarah Jenkins",
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100",
+                role: "Wisatawan",
+                text: "Hari ini luar biasa sekali! Belajar bikin canang bareng Ibu Wayan, terus sorenya saya gantian ngajarin anaknya bahasa Inggris dasar. Ini baru namanya liburan berkeluarga! 🌺✨",
+                img: "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=400",
+                likes: 24,
+                comments: 3
+            },
+            {
+                id: 2,
+                author: "I Wayan Sudarta",
+                avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100",
+                role: "Braya Lokal",
+                text: "Suksma brayaku Michael sudah mampir ke pondok kami dan bantu bersihkan pekarangan. Senang bisa ngobrol banyak soal budaya pertanian di luar negeri.",
+                img: "https://images.unsplash.com/photo-1546484475-7f7bd55792da?auto=format&fit=crop&q=80&w=400",
+                likes: 45,
+                comments: 8
+            }
+        ];
+
+        // Database Sertifikat (Mockup)
+        let certificates = [
+            {
+                id: "CERT-982-2026",
+                activity: "Membuat Canang & Upacara Sembahyang",
+                host: "I Wayan Sudarta",
+                date: "14 Juni 2026",
+                code: "BRAYA-VIP-15",
+                discount: "Diskon 15% untuk kunjungan berikutnya"
+            }
+        ];
+
+        let selectedExp = null;
+        let selectedDonationAmount = 0;
+        let isPhotoSelected = false;
+
+        // Initialize App
+        window.onload = function() {
+            lucide.createIcons();
+            renderExperiences('all');
+            renderFeeds();
+            renderCertificates();
+            navigateTo('home');
+        };
+
+        // Navigation Controller
+        function navigateTo(pageId) {
+            // Hide all pages
+            const pages = ['page-splash', 'page-home', 'page-detail', 'page-feed', 'page-reunion', 'page-awig', 'page-profile'];
+            pages.forEach(p => {
+                const el = document.getElementById(p);
+                if (el) el.classList.add('hidden');
+            });
+
+            // Show target page
+            document.getElementById('page-' + pageId).classList.remove('hidden');
+
+            // Update Navigation Bar Active Icon
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-target') === pageId) {
+                    btn.classList.add('text-amber-700', 'font-semibold');
+                    btn.classList.remove('text-stone-400');
+                } else {
+                    btn.classList.remove('text-amber-700', 'font-semibold');
+                    btn.classList.add('text-stone-400');
+                }
+            });
+
+            // Auto-scroll content back to top
+            document.getElementById('app-content').scrollTop = 0;
+        }
+
+        // Render Experience Cards (Home)
+        function renderExperiences(filter = 'all') {
+            const container = document.getElementById('experience-list');
+            container.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? experiences 
+                : experiences.filter(e => e.category === filter);
+
+            filtered.forEach(exp => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-stone-200 rounded-2xl overflow-hidden hover:shadow-md transition-all cursor-pointer flex";
+                card.onclick = () => openExperienceDetail(exp.id);
+
+                card.innerHTML = `
+                    <div class="w-24 h-28 shrink-0">
+                        <img src="${exp.img}" alt="${exp.title}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-3 flex-1 flex flex-col justify-between text-left">
+                        <div>
+                            <span class="text-[8px] font-bold uppercase tracking-wider ${exp.category === 'cultural' ? 'text-amber-700 bg-amber-50' : 'text-emerald-700 bg-emerald-50'} px-2 py-0.5 rounded-full">
+                                ${exp.category === 'cultural' ? 'Cultural Experience' : 'Community Experience'}
+                            </span>
+                            <h4 class="font-bold text-xs text-stone-800 line-clamp-2 mt-1 leading-snug">${exp.title}</h4>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] text-stone-500 pt-1">
+                            <span>Sisa: ${exp.capacity}</span>
+                            <span class="font-bold text-amber-700">Rp ${exp.price.toLocaleString('id-ID')}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterExperiences(type) {
+            renderExperiences(type);
+            document.getElementById('active-filter-badge').innerText = type === 'cultural' ? 'Kultural' : 'Komunitas';
+        }
+
+        // Open Experience Detail Page
+        function openExperienceDetail(id) {
+            selectedExp = experiences.find(e => e.id === id);
+            if (!selectedExp) return;
+
+            document.getElementById('detail-img').src = selectedExp.img;
+            
+            const badge = document.getElementById('detail-type-badge');
+            badge.innerText = selectedExp.category === 'cultural' ? 'Cultural Experience' : 'Community Experience';
+            badge.className = `absolute bottom-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full shadow-md text-white ${selectedExp.category === 'cultural' ? 'bg-amber-700' : 'bg-emerald-700'}`;
+
+            document.getElementById('detail-title').innerText = selectedExp.title;
+            document.getElementById('detail-host-img').src = selectedExp.hostImg;
+            document.getElementById('detail-host-name').innerText = selectedExp.host;
+            document.getElementById('detail-capacity').innerText = selectedExp.capacity;
+            document.getElementById('detail-awig').innerText = selectedExp.awig;
+            document.getElementById('detail-desc').innerText = selectedExp.desc;
+            document.getElementById('detail-price').innerText = `Rp ${selectedExp.price.toLocaleString('id-ID')}`;
+
+            // Reset exchange checkbox
+            document.getElementById('exchange-opt-in').checked = false;
+
+            navigateTo('detail');
+        }
+
+        // Show Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+                toast.classList.remove('opacity-100');
+            }, 3000);
+        }
+
+        // Payment Flow
+        function openPaymentModal() {
+            if (!selectedExp) return;
+
+            selectedDonationAmount = 0;
+            updateCheckoutCosts();
+
+            document.getElementById('checkout-img').src = selectedExp.img;
+            document.getElementById('checkout-title').innerText = selectedExp.title;
+            document.getElementById('checkout-host').innerText = `Mentor: ${selectedExp.host}`;
+            document.getElementById('checkout-price-base').innerText = `Kontribusi: Rp ${selectedExp.price.toLocaleString('id-ID')}`;
+
+            // Reset donation active style
+            document.querySelectorAll('.donation-btn').forEach(btn => btn.classList.remove('bg-amber-600', 'text-white'));
+
+            document.getElementById('payment-modal').classList.remove('hidden');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+        }
+
+        function selectDonation(amount) {
+            selectedDonationAmount = amount;
+            
+            // Highlight selected button
+            document.querySelectorAll('.donation-btn').forEach(btn => {
+                if (btn.innerText.includes(amount === 10000 ? '10K' : amount === 25000 ? '25K' : amount === 50000 ? '50K' : 'Nol')) {
+                    btn.className = "donation-btn bg-amber-600 text-white text-xs py-2 rounded-xl font-bold";
+                } else {
+                    btn.className = "donation-btn bg-white border border-stone-200 text-stone-700 text-xs py-2 rounded-xl hover:border-amber-500 font-semibold";
+                }
+            });
+
+            updateCheckoutCosts();
+        }
+
+        function updateCheckoutCosts() {
+            const base = selectedExp.price;
+            const total = base + selectedDonationAmount;
+
+            // 80 - 10 - 10 Split calculation
+            const forHost = base * 0.8;
+            const forApp = base * 0.1;
+            const forProgram = base * 0.1;
+
+            document.getElementById('split-host').innerText = `Rp ${forHost.toLocaleString('id-ID')}`;
+            document.getElementById('split-app').innerText = `Rp ${forApp.toLocaleString('id-ID')}`;
+            document.getElementById('split-program').innerText = `Rp ${forProgram.toLocaleString('id-ID')}`;
+
+            const donationRow = document.getElementById('split-donation-row');
+            if (selectedDonationAmount > 0) {
+                donationRow.classList.remove('hidden');
+                document.getElementById('split-donation-val').innerText = `+Rp ${selectedDonationAmount.toLocaleString('id-ID')}`;
+            } else {
+                donationRow.classList.add('hidden');
+            }
+
+            document.getElementById('checkout-total').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function processPayment() {
+            // Simulate Payment Success
+            closePaymentModal();
+            showToast("Pembayaran Sukses! Suksma atas kontribusi Anda.");
+
+            // Create digital certificate
+            const newCert = {
+                id: `CERT-${Math.floor(100 + Math.random() * 900)}-2026`,
+                activity: selectedExp.title,
+                host: selectedExp.host,
+                date: "23 Juni 2026",
+                code: "BRAYA-REWARD-10",
+                discount: "Diskon 10% untuk aktivitas berikutnya"
+            };
+            certificates.unshift(newCert);
+            renderCertificates();
+
+            // Post to Feed automatically as sharing moment
+            const optIn = document.getElementById('exchange-opt-in').checked;
+            const textPost = `Saya baru saja memesan aktivitas "${selectedExp.title}" bersama ${selectedExp.host}! ${optIn ? "Saya juga mendaftar untuk mengajarkan keterampilan setelah sesi berakhir. 🌟" : ""}`;
+            
+            feeds.unshift({
+                id: Date.now(),
+                author: "I Made Michael",
+                avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=120",
+                role: "Wisatawan",
+                text: textPost,
+                img: selectedExp.img,
+                likes: 1,
+                comments: 0
+            });
+            renderFeeds();
+
+            navigateTo('profile');
+        }
+
+        // Render Feed Posts
+        function renderFeeds() {
+            const container = document.getElementById('feed-posts');
+            container.innerHTML = '';
+
+            feeds.forEach(feed => {
+                const post = document.createElement('div');
+                post.className = "bg-white border border-stone-200 rounded-3xl p-4 space-y-3 shadow-sm text-left";
+                
+                post.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${feed.avatar}" alt="${feed.author}" class="w-9 h-9 rounded-full object-cover">
+                        <div>
+                            <h4 class="text-xs font-bold text-stone-800">${feed.author}</h4>
+                            <p class="text-[10px] text-stone-500">${feed.role}</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-stone-600 leading-relaxed">${feed.text}</p>
+                    ${feed.img ? `<div class="rounded-2xl overflow-hidden max-h-48 bg-stone-100"><img src="${feed.img}" class="w-full h-full object-cover"></div>` : ''}
+                    <div class="flex gap-4 items-center pt-2 text-[11px] text-stone-500 border-t border-stone-100">
+                        <button onclick="likeFeed(${feed.id})" class="flex items-center gap-1 hover:text-amber-700">
+                            <i data-lucide="heart" class="w-4 h-4 text-red-500 fill-red-500"></i> <span>${feed.likes} Suka</span>
+                        </button>
+                        <span class="flex items-center gap-1">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i> <span>${feed.comments} Komentar</span>
+                        </span>
+                    </div>
+                `;
+                container.appendChild(post);
+            });
+            lucide.createIcons();
+        }
+
+        function likeFeed(id) {
+            const post = feeds.find(f => f.id === id);
+            if (post) {
+                post.likes += 1;
+                renderFeeds();
+            }
+        }
+
+        function triggerPhotoUpload() {
+            isPhotoSelected = true;
+            document.getElementById('upload-status').classList.remove('hidden');
+        }
+
+        function addNewPost() {
+            const text = document.getElementById('new-post-text').value;
+            if (!text.trim()) {
+                showToast("Tulis sesuatu terlebih dahulu!");
+                return;
+            }
+
+            const newPost = {
+                id: Date.now(),
+                author: "I Made Michael",
+                avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=120",
+                role: "Wisatawan",
+                text: text,
+                img: isPhotoSelected ? "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=400" : null,
+                likes: 0,
+                comments: 0
+            };
+
+            feeds.unshift(newPost);
+            renderFeeds();
+
+            // Clear inputs
+            document.getElementById('new-post-text').value = '';
+            isPhotoSelected = false;
+            document.getElementById('upload-status').classList.add('hidden');
+            showToast("Postingan Anda berhasil dibagikan!");
+        }
+
+        // Render Certificate List
+        function renderCertificates() {
+            const container = document.getElementById('certificate-list');
+            container.innerHTML = '';
+
+            certificates.forEach(cert => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-stone-200 p-4 rounded-2xl relative overflow-hidden text-left shadow-sm";
+                card.innerHTML = `
+                    <div class="absolute right-[-10px] bottom-[-10px] opacity-10 text-amber-600">
+                        <i data-lucide="award" class="w-20 h-20"></i>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[8px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full uppercase">Terverifikasi</span>
+                            <h5 class="text-xs font-bold text-stone-800 mt-1">${cert.activity}</h5>
+                            <p class="text-[10px] text-stone-500 mt-0.5">Bersama: ${cert.host}</p>
+                        </div>
+                        <span class="text-[9px] text-stone-400 font-bold">${cert.id}</span>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-stone-100 flex justify-between items-center text-[10px]">
+                        <div>
+                            <span class="text-stone-400">Kode Voucher:</span>
+                            <span class="font-mono font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">${cert.code}</span>
+                        </div>
+                        <span class="text-stone-600 font-semibold">${cert.discount}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
